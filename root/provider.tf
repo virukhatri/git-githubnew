@@ -6,7 +6,7 @@ terraform {
         }
     }
     # backend "azurerm" {
-    #     resource_group_name  = "rg-terraform-state"
+    #     resource_group_name  = "rg-terraform-state"  # this is for testing the commit
     #     storage_account_name = "stterraformstate"
     #     container_name       = "tfstate"
     #     key                  = "terraform.tfstate"
