@@ -1,0 +1,6 @@
+name,location,resource_group_name,ip_configuration_name,private_ip_address_allocation,subnet_name,assign_public_ip,public_ip_name
+nic-1,centralindia,rg-viru1,nic-ip-1,Dynamic,fornt-end-viru,true,pip-public-ip1
+nic-2,centralindia,rg-viru1,nic-ip-2,Dynamic,backend-viru,true,pip-public-ip2
+nic-3,centralindia,rg-viru2,nic-ip-3,Dynamic,peering-viru,false,null
+
+
