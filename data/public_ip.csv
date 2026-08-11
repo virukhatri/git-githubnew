@@ -1,0 +1,3 @@
+name,resource_group_name,location,allocation_method,sku
+pip-public-ip1,rg-viru1,centralindia,Static,Standard
+pip-public-ip2,rg-viru1,centralindia,Static,Standard

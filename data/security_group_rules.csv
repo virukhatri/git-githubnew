@@ -1,0 +1,5 @@
+name,priority,direction,access,protocol,source_port_range,destination_port_range,source_address_prefix,destination_address_prefix,nsg_name,resource_group_name
+rule1,100,Inbound,Allow,Tcp,*,80,*,*,security_group1,rg-viru1
+rule2,100,Inbound,Allow,Tcp,*,80,*,*,security_group2,rg-viru1
+rule3,100,Inbound,Allow,Tcp,*,80,*,*,security_group3,rg-viru2
+rule4,100,Inbound,Allow,Tcp,*,80,*,*,security_group4,rg-viru2

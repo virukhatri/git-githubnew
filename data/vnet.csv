@@ -1,0 +1,4 @@
+name,address_space,resource_group_name,location
+viru-vnet1,[10.0.0.0/16],rg-viru1,centralindia
+viru-vnet2,[10.1.0.0/16],rg-viru1,centralindia
+viru-vnet3,[10.2.0.0/16],rg-viru2,centralindia

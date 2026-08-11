@@ -1,0 +1,5 @@
+subnet_name,virtual_network_name,resource_group_name,address_prefixes
+fornt-end-viru,viru-vnet1,rg-viru1,[10.0.0.0/24]
+backend-viru,viru-vnet1,rg-viru1,[10.0.1.0/24]
+peering-viru,viru-vnet2,rg-viru2,[10.1.0.0/24]
+AzureBastionSubnet,viru-vnet3,rg-viru2,[10.2.0.0/26]
