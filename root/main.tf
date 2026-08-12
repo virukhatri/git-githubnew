@@ -46,3 +46,10 @@ module "security_group_and_subnet_association" {
   source = "../modules/security_group_and_subnet_assosiation"
   subnet_nsg_pairs = local.subnet_nsg_pairs
 }
+
+module "virtual_machine" {
+  depends_on = [module.network_interface]
+  source = "../modules/vm"
+  vm_data = local.vm_data
+  network_interface_ids = module.network_interface.nic_ids
+  }
