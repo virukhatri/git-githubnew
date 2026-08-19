@@ -1,1 +1,4 @@
-name,resource_group_name,location,size,admin_username,admin_password,disable_password_authentication,caching,storage_account_type,publisher,offer,sku,version
+name,resource_group_name,location,size,admin_username,admin_password,disable_password_authentication,nic_name,caching,storage_account_type,publisher,offer,sku,version
+vm1,rg-viru1,centralindia,Standard_B1s,azureuser,Test123!@#,false,nic-1,ReadWrite,Standard_LRS,Canonical,UbuntuServer,22_04-lts,latest
+vm2,rg-viru1,centralindia,Standard_B1s,azureuser,Test123!@#,false,nic-2,ReadWrite,Standard_LRS,Canonical,UbuntuServer,22_04-lts,latest
+vm3,rg-viru2,centralindia,Standard_B1s,azureuser,Test123!@#,false,nic-3,ReadWrite,Standard_LRS,Canonical,UbuntuServer,22_04-lts,latest

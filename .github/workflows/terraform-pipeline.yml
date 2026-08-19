@@ -1,0 +1,109 @@
+name: Terraform PR
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  contents: write    # write access to repository contents for this workflow
+  pull-requests: write
+  id-token: write
+
+env:
+  TF_WORKING_DIR: root
+
+jobs:
+
+  terraform-plan:
+    name: Terraform Plan
+    runs-on: ubuntu-latest
+
+    env:
+      ARM_USE_OIDC: true
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform init -input=false
+
+      - name: Terraform Validate
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform validate
+
+      - name: Terraform Plan
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: terraform plan -input=false
+
+  create-pr:
+    name: Create Pull Request
+    if: github.event_name == 'push'
+    needs: terraform-plan
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BRANCH="${{ github.ref_name }}"
+
+          EXISTING_PR=$(gh pr list \
+            --repo "${{ github.repository }}" \
+            --head "$BRANCH" \
+            --base main \
+            --state open \
+            --json number \
+            --jq '.[0].number')
+
+          if [ -n "$EXISTING_PR" ]; then
+            echo "Pull Request already exists: #$EXISTING_PR"
+          else
+            gh pr create \
+              --repo "${{ github.repository }}" \
+              --base main \
+              --head "$BRANCH" \
+              --title "Terraform changes: $BRANCH" \
+              --body "Terraform Plan completed successfully. Please review and approve this Pull Request."
+
+            echo "Pull Request created successfully."
+          fi
+
+  enable-auto-merge:
+    name: Enable Auto Merge
+    if: github.event_name == 'pull_request'
+    needs: terraform-plan
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Enable Auto Merge
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+
+          echo "Enabling auto merge for PR #$PR_NUMBER"
+
+          gh pr merge "$PR_NUMBER" \
+            --repo "${{ github.repository }}" \
+            --auto \
+            --squash
+
+          echo "Auto merge enabled."

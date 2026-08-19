@@ -6,7 +6,7 @@ terraform {
         }
     }
     backend "azurerm" {
-        resource_group_name  = "viru-backend"  # this is for testing the commit
+        resource_group_name  = "terraform-backend-viru"  # this is for testing the commit and testing the pipeline
         storage_account_name = "virustorage"
         container_name       = "tfstate"
         key                  = "terraform.tfstate"

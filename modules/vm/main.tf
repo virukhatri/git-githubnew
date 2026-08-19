@@ -1,5 +1,5 @@
 resource "azurerm_linux_virtual_machine" "vm" {
-  for_each = {for vm in var.vm_data : vm.name => vm}
+  for_each = {for vm in var.vm_data : vm.nic_name => vm}
   name                            = each.value.name
   resource_group_name             = each.value.resource_group_name
   location                        = each.value.location
@@ -9,9 +9,9 @@ resource "azurerm_linux_virtual_machine" "vm" {
   admin_password                  = each.value.admin_password
   disable_password_authentication = each.value.disable_password_authentication
 
-    network_interface_ids = [
-    azurerm_network_interface.nic[each.key].id,
-  ]
+network_interface_ids = [ 
+    var.network_interface_ids[each.key] 
+  ] 
 
   os_disk {
     caching              = each.value.caching
