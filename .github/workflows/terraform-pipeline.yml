@@ -11,7 +11,7 @@ on:
       - reopened
 
 permissions:
-  contents: write    # write access to repository contents
+  contents: write    # write access to repository contents for this workflow
   pull-requests: write
   id-token: write
 
